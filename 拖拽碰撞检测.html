@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#myDiv{
+			width: 50px;
+			height: 50px;
+			background: #5d7a03;
+			position: absolute;
+			z-index: 2;
+		}
+		#img1{
+			width: 50px;
+			height: 50px;
+			position: absolute;
+			left: 500px;
+			top: 200px;
+			z-index: 1;
+		}
+	</style>
+	<body>
+		<div id="myDiv"></div>
+		<img src="img/fish.png" id="img1"/>
+	</body>
+	<script>
+			var oDiv = document.getElementById('myDiv');
+			//获取div的left 和top
+			var oImg = document.getElementById('img1');
+			drag(oImg);
+			drag(oDiv);
+			function drag(obj){
+				obj.onmousedown = function(ev){
+					var divLeft = this.offsetLeft;
+					var divTop = this.offsetTop;
+					var ev = ev || event;
+					//获取鼠标坐标
+					var x = ev.clientX;
+					var y = ev.clientY;
+					var offX = x - divLeft;
+					var offY = y-divTop;
+					document.onmousemove = function(ev){
+						var ev = ev || event;
+						var L = ev.clientX - offX;
+						var T = ev.clientY - offY;
+						
+						var L1 = L;
+						var T1 = T;
+						var R1 = L+oDiv.offsetWidth;
+						var B1 = T + oDiv.offsetHeight;
+						
+						var L2 = oImg.offsetLeft;
+						var R2 = L2+ oImg.offsetWidth;
+						var T2 = oImg.offsetTop;
+						var B2 = T2+oImg.offsetHeight;
+						
+						if(R1 <L2 || B1<T2 || L1>R2 || T1 >B2){
+							oImg.src ="img/fish.png";
+						}else{
+
+							oImg.src = "img/ship.png";
+							
+						}
+						obj.style.left = L +"px";
+						obj.style.top= T +"px";
+					}
+					//松开鼠标无反应
+					document.onmouseup = function(){
+						document.onmousemove = document.onmouseup =null;
+					}
+					return false;
+				}
+			
+			}
+					
+			
+			
+		
+		
+	</script>
+</html>

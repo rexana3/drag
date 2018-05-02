@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#contain{
+			position: absolute;
+			top: 100px;
+			left: 400px;
+			width: 500px;
+			height: 500px;
+			border: 2px solid #bcd68d;
+			z-index: 1;
+		}
+		#circle{
+			position: absolute;
+			top: 10px;
+			left: 10px;
+			width: 20px;
+			height: 20px;
+			border: 2px solid #ce4f00;
+			border-radius: 20px;
+			background: white;
+			display: none;
+		}
+	</style>
+	<body>
+		<div id="contain">
+			<div id="circle"></div>
+			<div class="content"></div>
+		</div>
+	</body>
+	<script>
+		window.onload = function(){
+			var oDiv = document.getElementById('contain');
+			var oCircle= document.getElementById('circle');
+			var divWidth = oDiv.offsetWidth;
+			var divHeigth = oDiv.offsetWidth;
+			var i=0;
+			oDiv.onmousedown = function(ev){
+				var ev = ev||event;
+				//出现一个小红圈
+				oCircle.style.display = "block";
+				oCircle.style.left = ev.clientX - oDiv.offsetLeft-10+"px" ;
+				oCircle.style.top =ev.clientY - oDiv.offsetTop- 10+"px";
+				var nowLeft = ev.clientX - oDiv.offsetLeft;
+				var nowTop= ev.clientY- oDiv.offsetTop;
+				var newDiv = document.createElement("div");
+				var nDiv = oDiv.appendChild(newDiv);			
+				var myDiv= nDiv.setAttribute("id",i);
+				var myContent = document.getElementById(i);
+				creatDiv(myContent,0,0,nowLeft,nowTop);
+				
+				var oldX = ev.clientX;
+				var oldY = ev.clientY;
+				oDiv.onmousemove = function(ev){
+					var ev = ev||event;
+					oCircle.style.display = "none";
+					
+					var newWidth = ev.clientX - oldX;
+					var newHeight = ev.clientY - oldY;
+					var newLeft = nowLeft;
+					var newTop = nowTop;
+					if(newWidth<0){
+//						console.log(newWidth);
+						newWidth = -newWidth;
+						newLeft = nowLeft - newWidth;
+						
+					} 
+					if(newHeight<0){
+							newHeight = -newHeight;
+							newTop = nowTop - newHeight;
+//							console.log(newTop);
+						}
+					
+					if((newWidth + nowLeft)> divWidth){
+						newWidth = divWidth - nowLeft;
+					}else if((newHeight+nowTop)>divHeigth){
+						newHeight = divHeigth - nowTop;
+					}
+					creatDiv(myContent,newWidth,newHeight,newLeft,newTop);
+				}
+				document.onmouseup = function(){
+					oDiv.onmousemove = document.onmouseup = null;
+				}
+				i++;
+			}
+			function creatDiv(myDiv,width,height,left,top){
+				myDiv.style.position = "absolute";
+				myDiv.style.width = width+"px";
+				myDiv.style.height = height+"px";
+				myDiv.style.top = top+"px";
+				myDiv.style.left = left+"px";
+				myDiv.style.border = "3px solid #64c189";
+			}
+		}		
+	</script>
+</html>

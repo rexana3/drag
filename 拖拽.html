@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#myDiv{
+			width: 50px;
+			height: 50px;
+			background: #5d7a03;
+		}
+		#img1{
+			width: 50px;
+			height: 50px;
+		}
+	</style>
+	<body>
+		dddd
+		<div id="myDiv"></div>
+		<img src="img/fish.png" id="img1"/>
+	</body>
+	<script>
+			var oDiv = document.getElementById('myDiv');
+			//获取div的left 和top
+			var oImg = document.getElementById('img1');
+			
+			oImg.onmousedown = function(ev){
+				var divLeft = oImg.offsetLeft;
+				var divTop = oImg.offsetTop;
+				var ev = ev || event;
+				//获取鼠标坐标
+				var x = ev.clientX;
+				var y = ev.clientY;
+				var offX = x - divLeft;
+				var offY = y-divTop;
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					var newLeft = ev.clientX - offX;
+					var newTop = ev.clientY - offY;
+					oImg.style.marginLeft = newLeft +"px";
+					oImg.style.marginTop= newTop +"px";
+				}
+				//松开鼠标无反应
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup =null;
+				}
+				return false;
+			}
+			
+			//拖拽图片出现问题
+			
+			
+		
+		
+	</script>
+</html>

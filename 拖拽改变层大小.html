@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#myDiv{
+			position: absolute;
+			left: 500px;
+			top: 200px;
+			background: #25a72c;
+			width: 100px;
+			height: 100px;
+		}
+	</style>
+	<body>
+		<div id="myDiv"></div>
+	</body>
+	<script>
+		window.onload = function(){
+			var oDiv = document.getElementById('myDiv');
+			
+			oDiv.onmousedown = function(ev){
+				var ev = ev ||event;
+				var mouseX = ev.clientX;
+				var divL = this.offsetLeft;
+				var divW = this.offsetWidth;
+				var dis = 20;
+				var b ="";
+				if(mouseX> divL+divW - dis){
+					b = "right";
+
+				}else if(mouseX <divL +dis){
+					b = "left";
+				}
+//					console.log(b);
+				
+				document.onmousemove = function(ev){
+					var ev = ev ||event;
+					switch(b){
+						case "left":
+							oDiv.style.width = divW - (ev.clientX - mouseX) +"px";
+							oDiv.style.left = divL + (ev.clientX - mouseX) +"px";
+							break;
+						case "right":
+							oDiv.style.width =divW + (ev.clientX - mouseX) +"px";
+//							console.log();
+							break;
+					}
+				}
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+				}
+			}
+		}
+	</script>
+</html>
