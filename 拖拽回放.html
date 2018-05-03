@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		#btn{
+			width: 80px;
+			height: 30px;
+			top: 10px;
+			left: 50px;
+			position: absolute;
+		}
+		#myDiv{
+			height: 100px;
+			width: 100px;
+			top: 50px;
+			left: 50px;
+			background: #cb2d23;
+			position: absolute;
+		}
+	</style>
+	<body>
+		<button id="btn">回放</button>
+		<div id="myDiv"></div>
+	</body>
+	<script>
+		window.onload = function(){
+			var oDiv = document.getElementById("myDiv");
+			var oBtn = document.getElementById("btn");
+			var topArr = new Array();
+			var leftArr = new Array();
+
+			oDiv.onmousedown = function(ev){
+				var i=0;
+				var ev = ev || event;
+				disY = ev.clientY - oDiv.offsetTop;
+				disX = ev.clientX - oDiv.offsetLeft;
+//				console.log(leftArr[0]);
+				leftArr[0] = oDiv.offsetLeft;
+				topArr[0] = oDiv.offsetTop;
+				i = i+1;
+				
+				document.onmousemove = function(ev){
+					var ev = ev || event;
+					topArr[i] = ev.clientY - disY;
+					leftArr[i] = ev.clientX - disX;
+					oDiv.style.left = leftArr[i] +"px";
+					oDiv.style.top= topArr[i]+"px";
+					i++;
+				}
+				document.onmouseup = function(){
+					document.onmousemove = document.onmouseup = null;
+					}
+					return false;
+				
+			}
+			oBtn.onclick = function(){
+				var num = leftArr.length-1;
+				var timer = null;
+				timer = setInterval(function(){
+					oDiv.style.left = leftArr[num] + 'px';
+					oDiv.style.top = topArr[num] +'px';
+					num--;
+					if(num <0){
+						clearInterval(timer);
+					}
+				},100);
+					
+				}
+			}
+
+	</script>
+</html>
