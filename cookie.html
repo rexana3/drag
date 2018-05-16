@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<body>
+	</body>
+	<script>
+		window.onload = function(){
+//			alert(document.cookie());
+//			//设置cookie
+//			document.cookie = "usename=rexana";
+//			document.cookie = "age=18";
+//			//设置过期的时间，必须是字符串形式的时间 expires
+//			var oDate = new Date(); //得到的是object形式
+//			oDate.toGMTString(); //转换成字符串形式
+//			alert(typeof oDate.toGMTString());
+			// setDate() 来设置当前月的某一天。
+			//getDate() 并输出变量中月份的天
+			//encodeURI
+			//decodeURI
+			
+			//1.设置cookie
+			document.cookie='username=rexana';
+			document.cookie='age=18';
+			//2.设置过期时间
+			var oDate = new Date(); //获得当前时间
+			oDate.setDate(oDate.getDate()+365); //超过这个月 自动计算到下个月
+			oDate = oDate.toGMTString(); //转换为字符串形式
+//			alert(typeof oDate);
+			document.cookie='newMan=LLL;expires='+oDate;
+			console.log(document.cookie);
+			//3.进行编码译码
+			document.cookie='twoMan='+encodeURI("我是/n第二个男人")+';expires='+oDate;
+			//解码
+			var arr = document.cookie.split('; ');
+//			alert(arr);
+			for(var i=0; i<arr.length;i++){
+				var arr2 = arr[i].split('=');
+//				alert(arr2[0]);
+				if(arr2[0]=='age'){
+					alert(decodeURI(arr2[1]));
+				}e
+			}
+		}
+	</script>
+</html>
