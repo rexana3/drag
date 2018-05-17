@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+	</head>
+	<style>
+		body{
+			background: #f5f8fa;
+		}
+		#contain{
+			background: #ffffff;
+			width: 400px;
+			height: 470px;
+			position: absolute;
+			top: 100px;
+			left: 500px;
+			padding-top: 24px;
+			padding-bottom: 34px;
+		}
+		span{
+			font-size: 30px;
+			position: absolute;
+			left: 100px;
+		}
+		input{
+			width: 340px;
+			height: 50px;
+			position: absolute;
+			left: 26px;
+		}
+		#user{
+			top: 80px;
+			
+		}
+		#pass{
+			top: 160px;
+		}
+		#btn{
+			top: 240px;
+		}
+	</style>
+	<body>
+		<div id="contain">
+			<span>cookie实例</span>
+			<input type="text" placeholder="手机/用户名" id="user"/>
+			<input type="text" placeholder="登录密码" id="pass"/>
+			<input type="button" value="记住我" id="btn"/>
+		</div>
+	</body>
+	<script>
+		window.onload = function(){
+			var userInput = document.getElementById('user');
+			var passInput = document.getElementById('pass');
+			var btnInput = document.getElementById('btn');
+			if(document.cookie){
+				getCookie("user");
+				
+			}
+
+			btnInput.onclick = function(){
+				setCookie("user",userInput.value,5);
+				setCookie("pass",passInput.value,5);
+				userInput.value ="";
+				passInput.value="";
+				
+			}
+			function setCookie(key,value,time){
+				var oDate = new Date();
+				oDate.setDate(oDate.getDate()+time);
+				document.cookie=key+'='+encodeURI(value)+';expires='+oDate.toGMTString();
+			}
+			function getCookie(key){
+				var arr = document.cookie.split("; ");
+				for(var i=0;i<arr.length;i++){
+					var arr2 = arr[i].split("=");
+					if(arr2[0] == key){
+						userInput.value =decodeURI(arr2[1]);
+					}
+				}
+			}
+		}
+	</script>
+	
+</html>
